@@ -12,7 +12,7 @@ public partial class Pipe : Area2D
     public override void _Ready()
     {
         BodyEntered += _OnBodyEntered;
-		BodyEntered += _OnScoreAreaBodyEntered;
+		GetNode<Area2D>("ScoreArea").BodyEntered += _OnScoreAreaBodyEntered;
     }
 
 	public void _OnBodyEntered(Node2D body)
