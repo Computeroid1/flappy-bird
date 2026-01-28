@@ -60,6 +60,11 @@ public partial class Main : Node2D
 		Scroll = 0;
 		GetNode<Label>("ScoreLabel").Text = "Score: " + Score.ToString();
 		GetNode<CanvasLayer>("GameOver").Hide();
+
+		foreach(Pipe pipe in Pipes)
+		{
+			pipe.QueueFree();
+		}
 		Pipes.Clear();
 		GeneratePipes();
 		//GetNode<Timer>("PipeTimer").Start();
