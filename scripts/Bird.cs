@@ -7,7 +7,7 @@ public partial class Bird : CharacterBody2D
 	const float MAX_VEL = 600;
 	const float FLAP_SPEED = -500;
 	public bool flying = false;
-	bool falling = false;
+	public bool falling = false;
 	static readonly Vector2 START_POS = new Vector2(100, 400);
 
 	public override void _Ready()

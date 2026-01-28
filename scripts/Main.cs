@@ -26,6 +26,7 @@ public partial class Main : Node2D
 		ground = GetNode<Ground>("Ground");
 		GroundHeight = ground.GetNode<Sprite2D>("Sprite2D").Texture.GetHeight();
 		GetNode<Timer>("PipeTimer").Timeout += _OnPipeTimerTimeout;
+		ground.Hit += _OnGroundHit;
 		NewGame();
 	}
 
@@ -56,6 +57,7 @@ public partial class Main : Node2D
 		GameOver = false;
 		Score = 0;
 		Scroll = 0;
+		GetNode<Label>("ScoreLabel").Text = "Score: " + Score.ToString();
 		Pipes.Clear();
 		GeneratePipes();
 		//GetNode<Timer>("PipeTimer").Start();
@@ -79,6 +81,7 @@ public partial class Main : Node2D
 						if (bird.flying)
 						{
 							bird.Flap();
+							CheckTop();
 						}
 					}
 				}
@@ -107,12 +110,43 @@ public partial class Main : Node2D
 		Pos.Y = (ScreenSize.Y - GroundHeight)/2 + r.Next(-PipeRange, PipeRange);
 		pipe.Position = Pos;
 		pipe.Hit += BirdHit;
+		pipe.Scored += Scored;
 		AddChild(pipe);
 		Pipes.Add(pipe);
 	}
 
+	public void Scored()
+	{
+		Score += 1;
+		GetNode<Label>("ScoreLabel").Text = "Score: " + Score.ToString();
+	}
+
+	public void CheckTop()
+	{
+		if(bird.Position.Y < 0)
+		{
+			bird.falling = true;
+			StopGame();
+		}
+	}
+
+	public void StopGame()
+	{
+		GetNode<Timer>("PipeTimer").Stop();
+		bird.flying = false;
+		GameRunning = false;
+		GameOver = true;
+	}
+
 	public void BirdHit()
 	{
-		
+		bird.falling = true;
+		StopGame();
+	}
+
+	public void _OnGroundHit()
+	{
+		bird.falling = true;
+		StopGame();
 	}
 }
