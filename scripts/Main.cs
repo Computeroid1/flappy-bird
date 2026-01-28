@@ -14,14 +14,28 @@ public partial class Main : Node2D
 	const int PipeDelay = 100;
 	const int PipeRange = 200;
 	private Bird bird;
+	private Ground ground;
 
 	public override void _Ready()
 	{
+		ScreenSize = GetWindow().Size;
 		bird = GetNode<Bird>("Bird");
+		ground = GetNode<Ground>("Ground");
+		NewGame();
 	}
 
 	public override void _Process(double delta)
 	{
+		if (GameRunning)
+		{
+			Scroll += ScrollSpeed;
+
+			if(Scroll >= ScreenSize.X)
+			{
+				Scroll = 0;
+			}
+			ground.Position = new Vector2(-Scroll, ground.Position.Y);
+		}
 	}
 
 	private void NewGame()

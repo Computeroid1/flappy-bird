@@ -1,5 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://bww7o2c814eb8"]
+[gd_scene load_steps=4 format=3 uid="uid://bww7o2c814eb8"]
 
+[ext_resource type="Script" uid="uid://cnro0dj56xpbk" path="res://scripts/Ground.cs" id="1_mi8v4"]
 [ext_resource type="Texture2D" uid="uid://dk1xd356yuy84" path="res://assets/ground.png" id="1_pybca"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mi8v4"]
@@ -7,6 +8,7 @@ size = Vector2(1728, 165)
 
 [node name="Ground" type="Area2D"]
 texture_filter = 1
+script = ExtResource("1_mi8v4")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, 852)
