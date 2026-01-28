@@ -27,6 +27,7 @@ public partial class Main : Node2D
 		GroundHeight = ground.GetNode<Sprite2D>("Sprite2D").Texture.GetHeight();
 		GetNode<Timer>("PipeTimer").Timeout += _OnPipeTimerTimeout;
 		ground.Hit += _OnGroundHit;
+		GetNode<GameOver>("GameOver").Restart += _OnGameOverRestart;
 		NewGame();
 	}
 
@@ -58,6 +59,7 @@ public partial class Main : Node2D
 		Score = 0;
 		Scroll = 0;
 		GetNode<Label>("ScoreLabel").Text = "Score: " + Score.ToString();
+		GetNode<CanvasLayer>("GameOver").Hide();
 		Pipes.Clear();
 		GeneratePipes();
 		//GetNode<Timer>("PipeTimer").Start();
@@ -133,6 +135,7 @@ public partial class Main : Node2D
 	public void StopGame()
 	{
 		GetNode<Timer>("PipeTimer").Stop();
+		GetNode<CanvasLayer>("GameOver").Show();
 		bird.flying = false;
 		GameRunning = false;
 		GameOver = true;
@@ -148,5 +151,10 @@ public partial class Main : Node2D
 	{
 		bird.falling = true;
 		StopGame();
+	}
+
+	public void _OnGameOverRestart()
+	{
+		NewGame();
 	}
 }
